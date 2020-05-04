@@ -107,6 +107,24 @@ The dueling agents are implemented within the fully connected layers [here](http
 ##### &nbsp;
 
 ### 4. Run Experiments
+
+Hyperparameters  
+Parameter |	Value   
+learning rate |	0.0005  
+replay memory |	100000  
+num episodes |	2000  
+batch size |	64  
+update every |	4  
+gamma |	0.99  
+tau	| 0.001  
+epsilon start |	1.0  
+epsilon end	 | 0.01  
+epsilon decay |	0.995  
+PRIORITIZED_ALPHA |	0.6  
+PRIORITIZED_BETA |	0.4  
+PRIORITIZED_EPS	| 1e-6  
+
+
 The DQN, Double DQN and Dueling are tested with measurement of the agent's performance using the Banana environment. Performance is measured by the minimum number of episodes required to solve the environment.
 
 Below shows the complete set of experiments. These experiments compare different combinations of the components and hyperparameters discussed above. However, note that all agents utilized a replay buffer.
