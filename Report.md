@@ -109,7 +109,7 @@ The dueling agents are implemented within the fully connected layers [here](http
 ### 4. Run Experiments
 
 
-####Hyperparameters                   
+#### Hyperparameters                   
   
  Parameter         |	Value      
  --- | ---
@@ -148,7 +148,7 @@ The complete set of results and steps can be found in [this notebook](Navigation
 
 ## Future Improvements
 - **Improve Double DQN** The current results show that Double DQN has not been perform at its best, due to selection of hyperparameters.
-- **To implement prioritized* experience replay** This has not been implemented yet.
+- **To implement prioritized experience replay** This has not been implemented yet.
 - **To implement Navigation_pixel.ipynb** Learing from Pixels, the agent learn from information such as velocity, along with ray-based perception of objects around its forward direction.
 
 ##### &nbsp;
