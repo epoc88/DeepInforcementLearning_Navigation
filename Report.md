@@ -1,7 +1,8 @@
 ### Project 1: Navigation
 # Train an RL Agent to Collect Bananas
 
-<img src="assets/banana_agent.gif" width="60%" align="top-left" alt="" title="Banana Agent" />
+
+<img src="https://user-images.githubusercontent.com/10624937/42135619-d90f2f28-7d12-11e8-8823-82b970a54d7e.gif" width="60%" align="top-left" alt="" title="Banana Agent" />
 
 ##### &nbsp;
 
@@ -60,28 +61,17 @@ Running this agent a few times resulted in scores from -2 to 2. Obviously, if th
 ##### &nbsp;
 
 ### 3. Implement Learning Algorithm
-Agents use a policy to decide which actions to take within an environment. The primary objective of the learning algorithm is to find an optimal policy&mdash;i.e., a policy that maximizes the reward for the agent. Since the effects of possible actions aren't known in advance, the optimal policy must be discovered by interacting with the environment and recording observations. Therefore, the agent "learns" the policy through a process of trial-and-error that iteratively maps various environment states to the actions that yield the highest reward. This type of algorithm is called **Q-Learning**.
+Agents use a policy to decide which actions to take within an environment. The primary objective of the learning algorithm is to find an optimal policy&mdash;i.e., a policy that maximizes the reward for the agent. Since the effects of possible actions aren't known in advance, the optimal policy must be discovered by interacting with the environment and recording observations. Thus, the agent "learns" the policy through a process of trial-and-error that iteratively maps various environment states to the actions that yield the highest reward. This type of algorithm is called **Q-Learning**.
 
-As for constructing the Q-Learning algorithm, the general approach is to implement a handful of different components, then run a series of tests to determine which combination of components and which hyperparameters yield the best results.
-
-In the following sections, we'll describe each component of the algorithm in detail.
+For constructing the Q-Learning algorithm, the approach here is to implement a set of different components, run tests to determine the best combination of components and hyperparameters to achieve the best results.
 
 
 #### Q-Function
 To discover an optimal policy, I setup a Q-function. The Q-function calculates the expected reward `R` for all possible actions `A` in all possible states `S`.
 
-<img src="assets/Q-function.png" width="19%" align="top-left" alt="" title="Q-function" />
+<img src="images/Q-function.png" width="19%" align="top-left" alt="" title="Q-function" />
 
 We can then define our optimal policy `π*` as the action that maximizes the Q-function for a given state across all possible states. The optimal Q-function `Q*(s,a)` maximizes the total expected reward for an agent starting in state `s` and choosing action `a`, then following the optimal policy for each subsequent state.
-
-<img src="assets/optimal-policy-equation.png" width="47%" align="top-left" alt="" title="Optimal Policy Equation" />
-
-In order to discount returns at future time steps, the Q-function can be expanded to include the hyperparameter gamma `γ`.
-
-<img src="assets/optimal-action-value-function.png" width="67%" align="top-left" alt="" title="Optimal Action Value Function" />
-
-
-
 
 #### Deep Q-Network (DQN)
 With Deep Q-Learning, a deep neural network is used to approximate the Q-function. Given a network `F`, finding an optimal policy is a matter of finding the best weights `w` such that `F(s,a,w) ≈ Q(s,a)`.
@@ -97,19 +87,17 @@ As for the network inputs, rather than feeding-in sequential batches of experien
 #### Double Deep Q-Network (DDQN)
 One issue with Deep Q-Networks is they can overestimate Q-values (see [Thrun & Schwartz, 1993](https://www.ri.cmu.edu/pub_files/pub1/thrun_sebastian_1993_1/thrun_sebastian_1993_1.pdf)). The accuracy of the Q-values depends on which actions have been tried and which states have been explored. If the agent hasn't gathered enough experiences, the Q-function will end up selecting the maximum value from a noisy set of reward estimates. Early in the learning process, this can cause the algorithm to propagate incidentally high rewards that were obtained by chance (exploding Q-values). This could also result in fluctuating Q-values later in the process.
 
-<img src="assets/overestimating-Q-values.png" width="50%" align="top-left" alt="" title="Overestimating Q-values" />
-
 We can address this issue using Double Q-Learning, where one set of parameters `w` is used to select the best action, and another set of parameters `w'` is used to evaluate that action.  
 
-<img src="assets/DDQN-slide.png" width="40%" align="top-left" alt="" title="DDQN" />
+<img src="images/DDQN.png" width="40%" align="top-left" alt="" title="DDQN" />
 
-The DDQN implementation can be found [here](https://github.com/epoc88/DeepReinforcementLearning_Navigation/blob/master/dqn_agent.py) in the `agent.py` file of the source code.
+The DDQN implementation can be found [here](https://github.com/epoc88/DeepReinforcementLearning_Navigation/blob/master/dqn_agent.py) in the `dqn_agent.py` file of the source code.
 
 
 #### Dueling Agents
 Dueling networks utilize two streams: one that estimates the state value function `V(s)`, and another that estimates the advantage for each action `A(s,a)`. These two values are then combined to obtain the desired Q-values.  
 
-<img src="assets/dueling-networks-slide.png" width="60%" align="top-left" alt="" title="DDQN" />
+<img src="images/dueling-networks.png" width="60%" align="top-left" alt="" title="dueling" />
 
 The reasoning behind this approach is that state values don't change much across actions, so it makes sense to estimate them directly. However, we still want to measure the impact that individual actions have in each state, hence the need for the advantage function.
 
@@ -119,33 +107,29 @@ The dueling agents are implemented within the fully connected layers [here](http
 ##### &nbsp;
 
 ### 4. Run Experiments
-Now that the various components of our algorithm are in place, it's time to measure the agent's performance within the Banana environment. Performance is measured by the fewest number of episodes required to solve the environment.
+The DQN, Double DQN and Dueling are tested with measurement of the agent's performance using the Banana environment. Performance is measured by the minimum number of episodes required to solve the environment.
 
-The table below shows the complete set of experiments. These experiments compare different combinations of the components and hyperparameters discussed above. However, note that all agents utilized a replay buffer.
+Below shows the complete set of experiments. These experiments compare different combinations of the components and hyperparameters discussed above. However, note that all agents utilized a replay buffer.
 
-<img src="assets/experiment_summary.png" width="80%" align="top-left" alt="" title="Experiment Summary" />
+<img src="images/best.png" width="50%" align="top-left" alt="" title="DQN+ReplayBuffer" />
+<img src="images/dueling.png" width="50%" align="top-left" alt="" title="Dueling" />
+<img src="images/doubleDQN.png" width="50%" align="top-left" alt="" title="Double DQN" />
+<img src="images/comparison.png" width="50%" align="top-left" alt="" title="Comparision of training" />
 
 
 ##### &nbsp;
 
 ### 5. Select best performing agent
-The best performing agents were able to solve the environment in 200-250 episodes. While this set of agents included ones that utilized Double DQN and Dueling DQN, ultimately, the top performing agent was a simple DQN with replay buffer.
-
-<img src="assets/best-agent-graph.png" width="50%" align="top-left" alt="" title="Best Agent Graph" />
+The smartest agents is tested by 100 episodes, to see the score it is able to reach.
 
 The complete set of results and steps can be found in [this notebook](Navigation_final.ipynb).
-
-Also, [here](https://youtu.be/NZd1PoeBoro) is a video showing the agent's progress as it goes from randomly selecting actions to learning a policy that maximizes rewards.
-
-<a href="https://youtu.be/NZd1PoeBoro"><img src="assets/video-thumbnail.png" width="40%" align="top-left" alt="" title="Banana Agent Video" /></a>
-
 
 ##### &nbsp;
 
 ## Future Improvements
-- **Test the replay buffer** &mdash; Implement a way to enable/disable the replay buffer. As mentioned before, all agents utilized the replay buffer. Therefore, the test results don't measure the impact the replay buffer has on performance.
-- **Add *prioritized* experience replay** &mdash; Rather than selecting experience tuples randomly, prioritized replay selects experiences based on a priority value that is correlated with the magnitude of error. This can improve learning by increasing the probability that rare and important experience vectors are sampled.
-- **Replace conventional exploration heuristics with Noisy DQN** &mdash; This approach is explained [here](https://arxiv.org/abs/1706.10295) in this research paper. The key takeaway is that parametric noise is added to the weights to induce stochasticity to the agent's policy, yielding more efficient exploration.
+- **Improve Double DQN** The current results show that Double DQN has not been perform at its best, due to selection of hyperparameters.
+- **To implement prioritized* experience replay** This has not been implemented yet.
+- **To implement Navigation_pixel.ipynb** Learing from Pixels, the agent learn from information such as velocity, along with ray-based perception of objects around its forward direction.
 
 ##### &nbsp;
 
