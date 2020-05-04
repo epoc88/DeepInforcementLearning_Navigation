@@ -108,16 +108,12 @@ The dueling agents are implemented within the fully connected layers [here](http
 
 ### 4. Run Experiments
 
-| Layer   | (in, out)          | Activation|
-
-
 
 ####Hyperparameters                   
   
  Parameter         |	Value      
  --- | ---
- learning rate     |	0.0005         
- replay memory     |	100000           
+ learning rate     |	0.0005                 
  num episodes      |	2000          
  batch size        |	64             
  update every      |	4             
