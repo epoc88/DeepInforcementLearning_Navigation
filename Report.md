@@ -122,7 +122,7 @@ Below shows the complete set of experiments. These experiments compare different
 ### 5. Select best performing agent
 The smartest agents is tested by 100 episodes, to see the score it is able to reach.
 
-The complete set of results and steps can be found in [this notebook](Navigation_final.ipynb).
+The complete set of results and steps can be found in [this notebook](Navigation.ipynb).
 
 ##### &nbsp;
 
