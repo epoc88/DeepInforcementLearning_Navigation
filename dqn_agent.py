@@ -220,7 +220,4 @@ class DoubleDQNAgent(Agent):
 
         # update target network
         self.soft_update(self.qnetwork_local, self.qnetwork_target, TAU)
-<<<<<<< HEAD
-=======
 
->>>>>>> f83511132b65e8d27713255a9a2d238d87addcc0
